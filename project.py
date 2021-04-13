@@ -2,6 +2,40 @@
     Group Names: Viphu Nguyen, Gerson Roldan, Peter Chen, Donna Arndt
 """
 
+class Users():
+    """list of users
+    """
+    def __init__(self, user_name):
+        self.users = []
+
+
+    def add_user(self, user_name):
+        """adds user to list
+        """
+        self.users.append(user_name)
+    
+    def remove_user(self, user):
+        """removes user from list
+        """
+        if self.users:
+            self.users.remove(user)
+        else:
+            print("There are no users yet.")  
+
+
+    
+
+class User():
+    """The features of having a user
+    """
+    def __init__(self, fname, lname):
+        self.first = fname
+        self.last = lname
+        self.user_name = ""
+        self.password = ""
+        self.zip_code = 0
+
+
 class Login():
     """ The features of having a login page
     """
