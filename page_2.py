@@ -1,38 +1,40 @@
-import tkinter as tk
-class Application(tk.Tk):
-    """ To run the application of the GUI
-    """
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self.geometry('500x500')
-        self.title('Welcome to the Find Dog Breed App')
-        
-        first_label = tk.Label(self, text = "Login Screen", font=10) #Intro login screen
-        first_label.pack(padx = 3, pady = 3) #Pads for the Intro login screen
-        second_label = tk.Label(self, text = "Username:", font=10) #Username label
-        second_label.pack(padx = 3, pady = 3) 
-        Application.first_entry = tk.Entry(self, width = 30) #First input 
-        Application.first_entry.pack(padx = 7, pady = 7)
-        third_label = tk.Label(self, text = "Password:", font=10) #Password label
-        third_label.pack(padx = 3, pady = 3) 
-        Application.second_entry = tk.Entry(self, width = 30) #Second input
-        Application.second_entry.pack(padx = 7, pady = 7)
-        first_button = tk.Button(self, text ="Login", command = intro) #A button to click after login info is completed
-        first_button.pack(padx= 5, pady = 5)
-        
-        
-def intro():
-    """ To display the entries of the username and password
-    """
-    x = Application.first_entry.get()
-    y = Application.second_entry.get()
-    print(x, y)
+from tkinter import *
 
-def nextpage():
-    """ Will go onto the next page of the GUI
-    """
-    
+ws = Tk()
+ws.geometry('400x300')
+ws.title('PythonGuides')
+ws['bg']='#ffbf00'
 
+f = ("Times bold", 14)
+ 
+def nextPage():
+    ws.destroy()
+    import project
 
-app = Application()
-app.mainloop()
+def prevPage():
+    ws.destroy()
+    import page_1
+
+Label(
+    ws,
+    text="This is Second page",
+    padx=20,
+    pady=20,
+    bg='#ffbf00',
+    font=f
+).pack(expand=True, fill=BOTH)
+
+Button(
+    ws, 
+    text="Previous Page", 
+    font=f,
+    command=prevPage
+    ).pack(fill=X, expand=TRUE, side=LEFT)
+Button(
+    ws, 
+    text="Next Page", 
+    font=f,
+    command=prevPage
+    ).pack(fill=X, expand=TRUE, side=LEFT)
+
+ws.mainloop()
