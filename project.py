@@ -1,6 +1,8 @@
 """ Group Project: Making a Dog Breed App to allow users to find the right breed for them
     Group Names: Viphu Nguyen, Gerson Roldan, Peter Chen, Donna Arndt
 """
+import tkinter as tk
+
 
 class Users():
     """list of users
@@ -22,9 +24,6 @@ class Users():
         else:
             print("There are no users yet.")  
 
-
-    
-
 class User():
     """The features of having a user
     """
@@ -35,17 +34,8 @@ class User():
         self.password = ""
         self.zip_code = 0
 
-
-class Login():
-    """ The features of having a login page
-    """
-
 def login_screen():
     """ Create login screen for the user to access the app
-    
-    Args:
-
-    
     """
     print("*"*5, "Welcome to the Find Dog Breed App", "*"*5) #Print the intro of the login
     print("Enter 0 if you forgot your username/email address") #If the user forgot their username or email address login
@@ -70,6 +60,17 @@ def username():
     user_email = input("Enter your new username or email address: ")
     return user_email 
 
+class Application(tk.Tk):
+    """ The GUI of the app screen
+    """
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self.geometry('500x500')
+        self.title('Your first App')
+        first_label = tk.Label(self, text = "I'm a cool App!!", font=10)
+        first_label.pack(pady= 2, padx = 2)
+
+
 def main():
     """ Main Function
     
@@ -77,4 +78,6 @@ def main():
     """
     
 if __name__ == "__main__":
-    login_screen()
+    
+    app = Application()
+    app.mainloop()
