@@ -23,10 +23,14 @@ dog_behavior = []
 set_db = set(dog_behavior)
 
 #This is to display the dog names and also their temperament
-count = 0
+count = 1
 for x in response.json():
-    print(count, "Dog's name: " + x["name"]) #Dog's name
-    while count < 5: #Only display 5 dogs (for testing)
+    #print(count, "Dog's name: " + x["name"]) #Dog's name
+    while count < 6: #Only display 5 dogs (for testing)
+        print([count], x["name"] + "'s temperament: " + x["temperament"]) #Dog's temperament
+        count += 1    
+    
+        """
         try:
             print(x["name"] + "'s temperament: " + x["temperament"]) #Dog's temperament
         except KeyError:
@@ -34,7 +38,7 @@ for x in response.json():
         count+=1
         # print(x["life_span"])
         # dog_list.append(x)
-
+        """
 
 #length = len(response.json())
 #num = 0
