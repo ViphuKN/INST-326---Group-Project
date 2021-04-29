@@ -1,4 +1,5 @@
 import tkinter as tk
+
 class Application(tk.Tk):
     """ To run the application of the GUI
     """
@@ -17,7 +18,7 @@ class Application(tk.Tk):
         third_label.pack(padx = 3, pady = 3) 
         Application.second_entry = tk.Entry(self, width = 30) #Second input
         Application.second_entry.pack(padx = 7, pady = 7)
-        first_button = tk.Button(self, text ="Login", command = intro) #A button to click after login info is completed
+        first_button = tk.Button(self, text ="Login", command = nextpage) #A button to click after login info is completed
         first_button.pack(padx= 5, pady = 5)
         
         
@@ -29,10 +30,10 @@ def intro():
     print(x, y)
 
 def nextpage():
-    """ Will go onto the next page of the GUI
+    """ Go to the next page of the GUI
     """
+    import page_2
     
-
-
-app = Application()
-app.mainloop()
+if __name__ == "__main__":
+    app = Application()
+    app.mainloop()
