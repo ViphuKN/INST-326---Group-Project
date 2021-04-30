@@ -25,22 +25,20 @@ class Application(Tk):
         first_button = tk.Button(self, text ="Button", command = nextpage) #A button to click after login info is completed
         first_button.pack(padx= 5, pady = 5)
 
+ws = Tk()
+ws.geometry('400x300')
+ws.title('PythonGuides')
+ws['bg']='#ffbf00'
+f = ("Times bold", 14)
 
 Label(
     ws,
-    text="This is fourth page",
+    text="This is third page",
     padx=20,
     pady=20,
     bg='#ffbf00',
     font=f
 ).pack(expand=True, fill=BOTH)
-
-ws = Tk()
-ws.geometry('400x300')
-ws.title('PythonGuides')
-ws['bg']='#ffbf00'
-
-f = ("Times bold", 14)
  
 def nextPage():
     """ Go to the next page
