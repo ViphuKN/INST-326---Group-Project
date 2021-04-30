@@ -10,10 +10,14 @@ ws['bg']='#ffbf00'
 f = ("Times bold", 14)
  
 def nextPage():
+    """ Go to the next page
+    """
     ws.destroy()
     import page_3
 
 def prevPage():
+    """ Go to the previous page
+    """
     ws.destroy()
     import page_1
 
