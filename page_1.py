@@ -1,4 +1,6 @@
 import tkinter as tk
+import requests
+import json
 
 class Application(tk.Tk):
     """ To run the application of the GUI
