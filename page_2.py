@@ -1,4 +1,6 @@
 from tkinter import *
+import requests
+import json
 
 ws = Tk()
 ws.geometry('400x300')
@@ -9,7 +11,7 @@ f = ("Times bold", 14)
  
 def nextPage():
     ws.destroy()
-    import project
+    import page_3
 
 def prevPage():
     ws.destroy()
@@ -34,7 +36,7 @@ Button(
     ws, 
     text="Next Page", 
     font=f,
-    command=prevPage
+    command=nextPage
     ).pack(fill=X, expand=TRUE, side=LEFT)
 
 ws.mainloop()
