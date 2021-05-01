@@ -15,3 +15,10 @@ words
 An annotated bibliography of all sources you used to develop the program and how you used them. ```Delete this line later```
 
 words
+
+
+
+
+```Alternate page attempt, since we currently can't freely move between them. Will delete when issue is resolved```
+
+https://github.com/Ghastjio/INST-326---Group-Project---Page-Test
