@@ -12,3 +12,7 @@
 
 # print(response1.json()["temperament"])
 # print(response1.json())
+
+            # interger_map = map(int, height)
+            # height = list(interger_map)
+            # print(new_height)

@@ -7,9 +7,11 @@ dogs_data = response.json()
 #lists for filtering
 dogs_list = []
 unlisted_dogs = []
-behaviors = set()
 breeds = set()
+behaviors = set()
+heights = set()
 
+# print(dogs_data[0])
 
 ### data filtering changes
 def filter_breeds(data):
@@ -59,6 +61,65 @@ filter_temperament(dogs_data)
 #     if x["temperament"] == "unknown":
 #         print("true")
 ### data filtering changes
+
+#for identifying heigth/size groups
+def filter_heights(data):
+    for dog in data:
+        try:
+            #dog dict for height w/ imerial key has value pair == list(#, #) not string as defualt
+            # metric is the same, a string
+            height = dog['height']['imperial']
+            height = height.split(" - ")
+            new_height = []
+            for num in height:
+                num = float(num)
+                new_height.append(num)
+            #formats height ranges missing 2nd value by adding 2" to 1st value for 2nd value
+            if len(new_height) == 1:
+                new_height.append(new_height[0] + 2)
+            dog['height']['imperial'] = new_height
+        except KeyError:
+            #dog height unknown so placeholder variables for imperial used
+            dog["height"]['imperial'] = [0, 1]
+            
+#for identifying bred_for groups
+def filter_life_span(data):
+    # counter_y = 0
+    # counter_n = 0
+    for dog in data:
+        try:
+            life_span = []
+            years = dog['life_span'].lower().replace(' years', '')
+            if ' – ' in years:
+                years = years.split(' – ')
+            elif ' - ' in years:
+                years = years.split(' - ')
+            else:
+                years = [years]
+            # print(years)
+
+            for year in years:
+                year = int(year)
+                life_span.append(year)
+            if len(life_span) == 1:
+                #if only one year for life span, we append year by += 2 for second year
+                life_span.append(life_span[0] + 2)
+            dog['life_span'] = life_span
+            # print(dog['life_span'])
+
+            # counter_y += 1
+        except KeyError:
+            #dog height unknown so placeholder variables for years
+            # print(dog["name"] + "has no LIFE SPAN")
+            dog["life_span"] = [0,1]
+
+            # counter_n += 1
+    # print(counter_y)
+    # print(counter_n)
+
+
+filter_life_span(dogs_data)
+print(dogs_data[-1]['life_span'])
 
 ###old
 #This is to display the dog names and also their temperament
