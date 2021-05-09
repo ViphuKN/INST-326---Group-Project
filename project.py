@@ -78,6 +78,6 @@ def main():
     """
     
 if __name__ == "__main__":
-    
+    #This is for the gui of the login screen
     app = Application()
     app.mainloop()
