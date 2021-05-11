@@ -4,7 +4,7 @@ import json
 
 """Login page of the dog app"""
 
-class app(tk.Tk):
+class Application(tk.Tk):
     """ To run the application of the GUI
     """
     def __init__(self):
@@ -32,31 +32,31 @@ class app(tk.Tk):
         Application.second_entry.pack(padx = 7, pady = 7)
         
         #A button to click after login info is completed
-        first_button = tk.Button(self, text ="Login", command = main_menu) 
+        first_button = tk.Button(self, text ="Login", command = self.main_menu) 
         first_button.pack(padx= 5, pady = 5)
         #A button to register for an account
-        second_button = tk.Button(self, text ="Register", command = sign_up) 
+        second_button = tk.Button(self, text ="Register", command = self.sign_up) 
         second_button.pack(padx= 10, pady = 15)
         
-def intro():
-    """ To display the entries of the username and password
-    """
-    x = Application.first_entry.get()
-    y = Application.second_entry.get()
-    print(x, y)
+    def intro(self):
+        """ To display the entries of the username and password
+        """
+        x = Application.first_entry.get()
+        y = Application.second_entry.get()
+        print(x, y)
 
-def main_menu():
-    """ Go to the main menu page
-    """
-    import main_menu_page
+    def main_menu(self):
+        """ Go to the main menu page
+        """
+        tk.Tk.destroy(self) #This is to close the current page        
+        import main_menu_page
 
-def sign_up():
-    """ Go to the sign up page
-    """
-    #This is to close the current page
-    #tk.destroy() #Not working b/c it does not have destroy attribute 
-    import sign_up_page
+    def sign_up(self):
+        """ Go to the sign up page
+        """
+        tk.Tk.destroy(self) #This is to close the current page        
+        import sign_up_page
 
-if __name__ == "__main__":
-    app = Application()
-    app.mainloop()
+
+app2 = Application()
+app2.mainloop()
