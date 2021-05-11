@@ -44,31 +44,32 @@ class Application(tk.Tk):
         Application.fourth_entry.pack(padx = 7, pady = 7)
         
         #A button to click after login info is completed
-        first_button = tk.Button(self, text ="Login", command = main_menu) 
+        first_button = tk.Button(self, text ="Login", command = self.main_menu) 
         first_button.pack(padx= 5, pady = 5)
         #A button to go back to the login page
-        second_button = tk.Button(self, text ="Go Back", command = login) 
+        second_button = tk.Button(self, text ="Go Back", command = self.login) 
         second_button.pack(padx= 5, pady = 5)
         
-def intro():
-    """ To display the entries of the username and password
-    """
-    x = Application.first_entry.get()
-    x1 = Application.second_entry.get()
-    y = Application.third_entry.get()
-    y1 = Application.fourth_entry.get()
-    print(x, x1, y, y1)
+    def intro(self):
+        """ To display the entries of the username and password
+        """
+        x = Application.first_entry.get()
+        x1 = Application.second_entry.get()
+        y = Application.third_entry.get()
+        y1 = Application.fourth_entry.get()
+        print(x, x1, y, y1)
 
-def main_menu():
-    """ Successful Login
-    """
-    import main_menu_page
+    def main_menu(self):
+        """ Successful Login
+        """
+        tk.Tk.destroy(self) #This is to close the current page        
+        import main_menu_page
 
-def login():
-    """ Go to the previous page
-    """
-    import login_page
-    
-if __name__ == "__main__":
-    app = Application()
-    app.mainloop()
+    def login(self):
+        """ Go to the previous page
+        """
+        tk.Tk.destroy(self) #This is to close the current page                
+        import login_page
+
+app = Application()
+app.mainloop()
