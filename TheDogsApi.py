@@ -136,10 +136,10 @@ def filter_life_span(data):
 def get_photos(data):
     # subdirectory = 'image_files'
     photos = {}
-    # cwd = os.getcwd()
-    # p = Path('dog_images')
-    # p.mkdir(exist_ok=True)
-    # os.chdir('/dog_images')
+    cwd = os.getcwd()
+    p = Path('dog_images')
+    p.mkdir(exist_ok=True)
+    os.chdir('dog_images')
     for dog in data:
         try:
             url = dog['image']['url']
@@ -157,30 +157,14 @@ def get_photos(data):
                 photos[name] = file_name
                 r = requests.get(url)
                 # print(file_name)
+            if os.path.exists(file_name):
+                continue
+            print("this executed")
             with open(file_name, 'wb') as f:
                 f.write(r.content)
         except KeyError:
             print("no URL!")
-
-# r = requests.get(dogs_data[-1]['image']['url'])        
-
-# here = os.path.dirname(os.path.realpath(__file__))
-# subdir = "subdir"
-# filename = "yorki.jpg"
-# filepath = os.path.join(here, subdir, filename)
-
-# # create your subdirectory
-# os.mkdir(os.path.join(here, subdir))
-
-# # create an empty file.
-# try:
-#     with open(filepath, 'w') as f:
-#         f.write(r.content)
-# except IOError:
-#     print ("Wrong path provided")
-
-
-
+    os.chdir(cwd)
 
 ### data filtering changes END ###
 def main(data):
@@ -192,6 +176,7 @@ def main(data):
     filter_life_span(dogs_data)
     get_photos(dogs_data)
 main(dogs_data)
+
 # print(breeds)
 
 # print(dogs_data[-1]['name'])
