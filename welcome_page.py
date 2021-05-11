@@ -18,25 +18,23 @@ class Application(tk.Tk):
         first_label.pack(padx = 3, pady = 3) 
 
         #A button to login
-        first_button = tk.Button(self, text ="Login", command = nextpage) 
+        first_button = tk.Button(self, text ="Login", command = self.nextpage) 
         first_button.pack(padx= 5, pady = 5)
         #A button to register for an account
-        second_button = tk.Button(self, text ="Register", command = sign_up) 
+        second_button = tk.Button(self, text ="Register", command = self.sign_up) 
         second_button.pack(padx= 10, pady = 15)
         
-def nextpage():
-    """ Go to the main menu page
-    """
-    #This is to close the current page
-    #tk.destroy() #Not working b/c it does not have destroy attribute 
-    import login_page
+    def nextpage(self):
+        """ Go to the main menu page
+        """
+        tk.Tk.destroy(self) #This is to close the current page        
+        import login_page
 
-def sign_up():
-    """ Go to the sign up page
-    """
-    #This is to close the current page
-    #tk.destroy() #Not working b/c it does not have destroy attribute 
-    import sign_up_page
+    def sign_up(self):
+        """ Go to the sign up page
+        """
+        tk.Tk.destroy(self) #This is to close the current page        
+        import sign_up_page
 
 if __name__ == "__main__":
     app = Application()
