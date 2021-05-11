@@ -18,25 +18,27 @@ class Application(tk.Tk):
         first_label.pack(padx = 3, pady = 3) 
 
         #A button to go to the search page
-        first_button = tk.Button(self, text ="Search", command = search) 
+        first_button = tk.Button(self, text ="Search", command = self.search) 
         first_button.pack(padx= 5, pady = 5)
         
         
         #A button to go to the logout page
-        second_button = tk.Button(self, text ="Logout", command = logout) 
+        second_button = tk.Button(self, text ="Logout", command = self.logout) 
         second_button.pack(padx= 5, pady = 5)
         
         
-def search():
-    """ Go to the search page to select a dog breed
-    """
-    import search_page
+    def search(self):
+        """ Go to the search page to select a dog breed
+        """
+        tk.Tk.destroy(self) #This is to close the current page
+        import search_page
 
-def logout():
-    """ Direct the user to the welcome page if the user want to logout
-    """
-    import welcome_page
+    def logout(self):
+        """ Direct the user to the welcome page if the user want to logout
+        """
+        tk.Tk.destroy(self) #This is to close the current page
+        import welcome_page
       
-if __name__ == "__main__":
-    app = Application()
-    app.mainloop()
+
+app = Application()
+app.mainloop()
