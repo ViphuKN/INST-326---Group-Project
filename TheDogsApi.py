@@ -9,11 +9,13 @@ response = requests.get("https://api.thedogapi.com/v1/breeds")
 dogs_data = response.json()
 #lists for filtering
 dogs_list = []
-unlisted_dogs = []
 breeds = set()
 behaviors = set()
-heights = set()
+# heights = set()
 
+def display_behaviors(behaviors):
+    for behaveior in behaviors:
+        print(behaveior)
 ### data filtering changes START ###
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed data
@@ -130,12 +132,15 @@ def filter_life_span(data):
     # print(counter_y)
     # print(counter_n)
 ### data filtering changes END ###
-filter_breeds(dogs_data)
-filter_temperament(dogs_data)
-filter_heights(dogs_data)
-filter_weights(dogs_data)
-filter_life_span(dogs_data)
-
+def main(data):
+    #modifies the dogs api json informatio
+    filter_breeds(dogs_data)
+    filter_temperament(dogs_data)
+    filter_heights(dogs_data)
+    filter_weights(dogs_data)
+    filter_life_span(dogs_data)
+main(dogs_data)
+print(breeds)
 # print(dogs_data[-1]['name'])
 # print(dogs_data[-1]['image']['url'])
 # # for k, v in dogs_data[-1].items():
