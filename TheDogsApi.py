@@ -1,5 +1,8 @@
 import requests
 import json
+import urllib.request
+from PIL import Image
+
 dogs_apik = '100ae381-76de-48ed-8a6d-73c6e11af170'
 # print(response.json()["name"])
 response = requests.get("https://api.thedogapi.com/v1/breeds")
@@ -11,9 +14,7 @@ breeds = set()
 behaviors = set()
 heights = set()
 
-# print(dogs_data[0])
-
-### data filtering changes
+### data filtering changes START ###
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed data
     empty strings (only one case) are labeled msc, and missing breed_group keys are
@@ -31,38 +32,21 @@ def filter_breeds(data):
             # print(dog["name"] + " DID NOT HAVE A BREED!")
             dog["breed_group"] = "Miscellaneous"
             breeds.add(dog["breed_group"])
-
-filter_breeds(dogs_data)
-### test to see if filter_breeds() works ###
-# print("breeds")
-# print(len(breeds))
-# for x in breeds:
-#     print(x)
-# print(breeds)
-
-
 #For figuring out what dogs have temperments missing
 def filter_temperament(data):
     for dog in data:
         try:
             dog["temperament"]
-            if dog["temperament"] == "":
-                dog["temperament"] = "unknown"
-            behaviors.add(dog["temperament"])
+            # if dog["temperament"] == "":
+            #     dog["temperament"] = "unknown"
+            dog["temperament"] = dog["temperament"].split(', ')
+            for t in dog["temperament"]:
+                behaviors.add(t)
         except KeyError:
-            # print(dog["name"] + " DID NOT HAVE A TEMPERAMENT__!")
-            dog["temperament"] = "unknown"
-            behaviors.add(dog["temperament"])
-
-filter_temperament(dogs_data)
-### test to see if filter_temperment() works ###
-# print(len(behaviors))
-# for x in dogs_data:
-#     if x["temperament"] == "unknown":
-#         print("true")
-### data filtering changes
-
-#for identifying heigth/size groups
+            dog["temperament"] = ["unknown"]
+            for t in dog["temperament"]:
+                behaviors.add(t)
+#for wrangling heigth groups
 def filter_heights(data):
     for dog in data:
         try:
@@ -81,8 +65,37 @@ def filter_heights(data):
         except KeyError:
             #dog height unknown so placeholder variables for imperial used
             dog["height"]['imperial'] = [0, 1]
-            
-#for identifying bred_for groups
+#for wrangling weights data in imperial
+def filter_weights(data):
+    for dog in data:
+        try:
+            #dog dict for weight w/ imerial key has value pair == list(#, #) not string as defualt
+            # metric is the same, a string
+            weight = dog['weight']['imperial']
+            if ' - ' in weight:
+                weight = weight.split(" - ")
+            elif ' – ' in weight:
+                weight = weight.split(" – ")
+            else:
+                weight = [weight]
+            if 'up' in weight:
+                weight[0] = int(weight[1]) - 1
+                weight[0] = str(weight[0])
+                weight[1] = str(weight[1])
+            #Changes string to interger
+            new_weight = []
+            for num in weight:
+                num = float(num)
+                new_weight.append(num)
+            #formats height ranges missing 2nd value by adding 2" to 1st value for 2nd value
+            if len(new_weight) == 1:
+                new_weight.append(new_weight[0] + 2)
+            dog['weight']['imperial'] = new_weight
+        except KeyError:
+            print("no weight")
+            #dog height unknown so placeholder variables for imperial used
+            dog["weight"]['imperial'] = [0, 1]
+#for wrangling life span data
 def filter_life_span(data):
     # counter_y = 0
     # counter_n = 0
@@ -116,28 +129,21 @@ def filter_life_span(data):
             # counter_n += 1
     # print(counter_y)
     # print(counter_n)
-
-
+### data filtering changes END ###
+filter_breeds(dogs_data)
+filter_temperament(dogs_data)
+filter_heights(dogs_data)
+filter_weights(dogs_data)
 filter_life_span(dogs_data)
-print(dogs_data[-1]['life_span'])
 
-###old
-#This is to display the dog names and also their temperament
-# count = 1
-# for x in response.json():
-#     #print(count, "Dog's name: " + x["name"]) #Dog's name
-#     while count < 6: #Only display 5 dogs (for testing)
-#         print([count], x["name"] + "'s temperament: " + x["temperament"]) #Dog's temperament
-#         count += 1    
-    
-#         """
-#         try:
-#             print(x["name"] + "'s temperament: " + x["temperament"]) #Dog's temperament
-#         except KeyError:
-#             print("DID NOT HAVE TEMPERAMENT") #If the dog doesn't have a temperament
-#         count+=1
-#         # print(x["life_span"])
-#         # dog_list.append(x)
-#         """
+# print(dogs_data[-1]['name'])
+# print(dogs_data[-1]['image']['url'])
+# # for k, v in dogs_data[-1].items():
+# #     print(f"{k}: {v}")
+# url = dogs_data[-1]['image']['url']
+# url_response = urllib.request.urlopen(url)
+# image1 = url_res
+# image1.show()
+
 
 
