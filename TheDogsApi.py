@@ -1,7 +1,8 @@
+import time
 import requests
 import json
-import urllib.request
-from PIL import Image
+import os
+from pathlib import Path
 
 dogs_apik = '100ae381-76de-48ed-8a6d-73c6e11af170'
 # print(response.json()["name"])
@@ -131,6 +132,56 @@ def filter_life_span(data):
             # counter_n += 1
     # print(counter_y)
     # print(counter_n)
+#for wrangling photos
+def get_photos(data):
+    # subdirectory = 'image_files'
+    photos = {}
+    # cwd = os.getcwd()
+    # p = Path('dog_images')
+    # p.mkdir(exist_ok=True)
+    # os.chdir('/dog_images')
+    for dog in data:
+        try:
+            url = dog['image']['url']
+            name = dog['name']
+            png_suffix = '.png'
+            jpeg_suffix = '.jpg'
+            if url.endswith(jpeg_suffix):
+                file_name = dog['name'] + ".jpg"
+                photos[name] = file_name
+                r = requests.get(url)
+                # print(file_name)
+
+            elif url.endswith(png_suffix):
+                file_name = dog['name'] + ".png"
+                photos[name] = file_name
+                r = requests.get(url)
+                # print(file_name)
+            with open(file_name, 'wb') as f:
+                f.write(r.content)
+        except KeyError:
+            print("no URL!")
+
+# r = requests.get(dogs_data[-1]['image']['url'])        
+
+# here = os.path.dirname(os.path.realpath(__file__))
+# subdir = "subdir"
+# filename = "yorki.jpg"
+# filepath = os.path.join(here, subdir, filename)
+
+# # create your subdirectory
+# os.mkdir(os.path.join(here, subdir))
+
+# # create an empty file.
+# try:
+#     with open(filepath, 'w') as f:
+#         f.write(r.content)
+# except IOError:
+#     print ("Wrong path provided")
+
+
+
+
 ### data filtering changes END ###
 def main(data):
     #modifies the dogs api json informatio
@@ -139,8 +190,10 @@ def main(data):
     filter_heights(dogs_data)
     filter_weights(dogs_data)
     filter_life_span(dogs_data)
+    get_photos(dogs_data)
 main(dogs_data)
-print(breeds)
+# print(breeds)
+
 # print(dogs_data[-1]['name'])
 # print(dogs_data[-1]['image']['url'])
 # # for k, v in dogs_data[-1].items():
