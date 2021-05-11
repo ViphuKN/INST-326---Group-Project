@@ -40,10 +40,6 @@ class Application(tk.Tk):
         first_button.pack(padx= 5, pady = 5)
         
         #A button to go to the logout page
-        second_button = tk.Button(self, text ="Favorites", command = self.favorite) 
-        second_button.pack(padx= 5, pady = 5)
-        
-        #A button to go to the logout page
         third_button = tk.Button(self, text ="Logout", command = self.logout) 
         third_button.pack(padx= 5, pady = 5)
     
@@ -52,12 +48,6 @@ class Application(tk.Tk):
         """
         tk.Tk.destroy(self) #This is to close the current page
         import results_page
-
-    def favorite(self):
-        """ Go to the favorite page
-        """
-        tk.Tk.destroy(self) #This is to close the current page
-        import favorite_page
         
     def logout(self):
         """ Direct the user to the welcome page if the user want to logout
