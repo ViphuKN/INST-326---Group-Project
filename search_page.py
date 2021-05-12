@@ -33,7 +33,7 @@ class Application(tk.Tk):
         fourth_label = tk.Label(self, text = "Lifespan", font=10)  #Try to have search for size, temperament, and breed
         fourth_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
-        # lifespan_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
+        # lifespan_selections = OptionMenu(win, clicked, "Short", "Medium", "Long")
         
         #A button to go to the search page
         first_button = tk.Button(self, text ="Show Results", command = self.results) 
