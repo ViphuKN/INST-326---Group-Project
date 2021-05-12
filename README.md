@@ -2,7 +2,7 @@
 
 This program aids people in finding dogs that are right for them. The user answers several questions that will determine what breeds best suit them. Then the program will find local shelters with those breeds and inform the user about them.
 
-To run it, go to your system's command prompt and enter ```python [file path]/login_page.py```
+To run it, go to your system's command prompt and enter ```python [file path]/welcome_page.py```
 
 Once you're in the app, login or register, then search for the breed that's right for you by the weight / type / lifespan categories. After doing that, select the button to show your results, then reveal them. If at any point you're finished, simply hit the logout button.
 
