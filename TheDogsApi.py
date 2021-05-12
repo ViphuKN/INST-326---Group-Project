@@ -19,13 +19,17 @@ def display_behaviors(behaviors):
         print(behaveior)
 ### data filtering changes START ###
 def filter_breeds(data):
-    """Filters Through dogs_data to take care of missing breed data
+    """Filters Through dogs_data to take care of missing breed types data
     empty strings (only one case) are labeled msc, and missing breed_group keys are
     reconcilled with msc.
 
     There are technically 7 breeds total with 8 & 9 being mixed and msc. (in a set so unordered really)
+    
+    args:
+        data - dog api jason data
     """
     for dog in data:
+        #checks to see if breed types exists for each dog
         try:
             dog["breed_group"]
             if dog["breed_group"] == "":
@@ -37,8 +41,17 @@ def filter_breeds(data):
             breeds.add(dog["breed_group"])
 #For figuring out what dogs have temperments missing
 def filter_temperament(data):
+    """Filters Through dogs_data to wrangler temperment values, they are stored as one long string as
+    opposed to a list of strings containg temperament. This creates a list of such strings.
+
+    If no temperment, then we place unkown into list as a place holder
+    
+    args:
+        data - dog api jason data
+    """
     for dog in data:
         try:
+            #check for temperament values under temperament keys
             dog["temperament"]
             # if dog["temperament"] == "":
             #     dog["temperament"] = "unknown"
@@ -46,11 +59,19 @@ def filter_temperament(data):
             for t in dog["temperament"]:
                 behaviors.add(t)
         except KeyError:
+            #if no temperament key, then create key with unknown value for pair
             dog["temperament"] = ["unknown"]
             for t in dog["temperament"]:
                 behaviors.add(t)
 #for wrangling heigth groups
 def filter_heights(data):
+    """Filters Through dogs_data to wrangle heights. Changes imperial key values into a
+    list containing the dog heights range. If only one value in string, then we add 2 inches to height.
+    If no height then we add 0 minimum 1 maximum as a place holder.
+
+    args:
+        data - dog api jason data
+    """
     for dog in data:
         try:
             #dog dict for height w/ imerial key has value pair == list(#, #) not string as defualt
@@ -70,6 +91,13 @@ def filter_heights(data):
             dog["height"]['imperial'] = [0, 1]
 #for wrangling weights data in imperial
 def filter_weights(data):
+    """Filters Through dogs_data to wrangle weights. Changes imperial key values into a
+    list containing the dog weights range. If only one value in string, then we add 2 pounds to weight.
+    If no weight then we add 0 minimum 1 maximum as a place holder.
+
+    args:
+        data - dog api jason data
+    """
     for dog in data:
         try:
             #dog dict for weight w/ imerial key has value pair == list(#, #) not string as defualt
@@ -100,8 +128,13 @@ def filter_weights(data):
             dog["weight"]['imperial'] = [0, 1]
 #for wrangling life span data
 def filter_life_span(data):
-    # counter_y = 0
-    # counter_n = 0
+    """Filters Through dogs_data to wrangle life span. Changes key values into a
+    list containing the dog age range. If only one value in string, then we add 2 years to range.
+    If no age then we add 0 minimum 1 maximum to list as a place holder.
+
+    args:
+        data - dog api jason data
+    """
     for dog in data:
         try:
             life_span = []
@@ -112,7 +145,6 @@ def filter_life_span(data):
                 years = years.split(' - ')
             else:
                 years = [years]
-            # print(years)
 
             for year in years:
                 year = int(year)
@@ -121,52 +153,66 @@ def filter_life_span(data):
                 #if only one year for life span, we append year by += 2 for second year
                 life_span.append(life_span[0] + 2)
             dog['life_span'] = life_span
-            # print(dog['life_span'])
 
-            # counter_y += 1
         except KeyError:
             #dog height unknown so placeholder variables for years
             # print(dog["name"] + "has no LIFE SPAN")
             dog["life_span"] = [0,1]
-
-            # counter_n += 1
-    # print(counter_y)
-    # print(counter_n)
 #for wrangling photos
 def get_photos(data):
-    # subdirectory = 'image_files'
+    """Creates subdirectory 'dog_images' to store images from dogs_data. Made to only run once, it stores an image for each
+    dog with the appropriate filename. accounts for jpg and png file types.
+    args:
+        data - dog api jason data
+    """
     photos = {}
     cwd = os.getcwd()
     p = Path('dog_images')
     p.mkdir(exist_ok=True)
+    #change directory, needed to write photos to
     os.chdir('dog_images')
+    #loop through data to create filenames corresponding to image data types
     for dog in data:
         try:
             url = dog['image']['url']
             name = dog['name']
             png_suffix = '.png'
             jpeg_suffix = '.jpg'
+            #for jpg
             if url.endswith(jpeg_suffix):
                 file_name = dog['name'] + ".jpg"
                 photos[name] = file_name
                 r = requests.get(url)
-                # print(file_name)
-
+            #for png
             elif url.endswith(png_suffix):
                 file_name = dog['name'] + ".png"
                 photos[name] = file_name
                 r = requests.get(url)
-                # print(file_name)
+            #if image file exists start loop again   
             if os.path.exists(file_name):
                 continue
-            print("this executed")
+            #if the image file doesn't exist we will write to directory
             with open(file_name, 'wb') as f:
                 f.write(r.content)
+        #error handling
         except KeyError:
             print("no URL!")
+    #change directory back to parent directory
     os.chdir(cwd)
 
 ### data filtering changes END ###
+
+#dog class
+class Dog():
+    def __init__(self, name, weight, height, temperament, filename):
+        self.name = name
+        self.weight = weight
+        self.height = height
+        self.temperament = temperament
+        self.filename = filename
+
+    pass
+
 def main(data):
     #modifies the dogs api json informatio
     filter_breeds(dogs_data)
@@ -174,7 +220,8 @@ def main(data):
     filter_heights(dogs_data)
     filter_weights(dogs_data)
     filter_life_span(dogs_data)
-    get_photos(dogs_data)
+    # get_photos(dogs_data)
+    print(dogs_data[0])
 
 main(dogs_data)
 
