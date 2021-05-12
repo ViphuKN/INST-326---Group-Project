@@ -8,15 +8,23 @@ dogs_apik = '100ae381-76de-48ed-8a6d-73c6e11af170'
 # print(response.json()["name"])
 response = requests.get("https://api.thedogapi.com/v1/breeds")
 dogs_data = response.json()
-#lists for filtering
+#lists for all dog breeds
 dogs_list = []
+#stores 9 breed types
 breeds = set()
+#stores all possible temperaments
 behaviors = set()
 # heights = set()
 
-def display_behaviors(behaviors):
-    for behaveior in behaviors:
-        print(behaveior)
+#puts all dogs names in a global list
+def store_dog_names(data):
+    for dog in data:
+        dogs_list.append(dog['name'])
+#run after filer_temperament
+def store_behaviors(behaviors_list):
+    behaviors = list(behaviors_list)
+    behaviors = sorted(behaviors)
+    return behaviors
 ### data filtering changes START ###
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed types data
@@ -41,11 +49,8 @@ def filter_breeds(data):
             breeds.add(dog["breed_group"])
 #For figuring out what dogs have temperments missing
 def filter_temperament(data):
-    """Filters Through dogs_data to wrangler temperment values, they are stored as one long string as
-    opposed to a list of strings containg temperament. This creates a list of such strings.
-
+    """Puts all possible behaviors in a global set & makes dog temperment a list rather than a string. 
     If no temperment, then we place unkown into list as a place holder
-    
     args:
         data - dog api jason data
     """
@@ -214,18 +219,18 @@ class Dog():
     pass
 
 def main(data):
-    #modifies the dogs api json informatio
+    #modifies the dogs api json information
     filter_breeds(dogs_data)
     filter_temperament(dogs_data)
     filter_heights(dogs_data)
     filter_weights(dogs_data)
     filter_life_span(dogs_data)
+    store_dog_names(dogs_data)
     # get_photos(dogs_data)
-    print(dogs_data[0])
 
 main(dogs_data)
-
-
+#runs no matter what, stores all possible behaviors
+# behaviors = store_behaviors(behaviors)
 
 
 
