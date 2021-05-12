@@ -68,31 +68,31 @@ class Application(tk.Tk):
     def dog_breed(self):
         """Dog Breed Results
         """
-        label = tk.Label(self, text= "Test output")    
+        label = tk.Label(self, text= "Dog Breed")    
         label.pack(padx = 3, pady = 3) 
         
     def dog_temperament(self):
         """Dog temperament result
         """ 
-        label = tk.Label(self, text= "Test output 2")    
+        label = tk.Label(self, text= "Dog temperament")    
         label.pack(padx = 3, pady = 3) 
         
     def dog_height(self):
         """Dog height result
         """ 
-        label = tk.Label(self, text= "Test output 3")    
+        label = tk.Label(self, text= "Dog height")    
         label.pack(padx = 3, pady = 3) 
 
     def dog_weight(self):
         """Dog weight result
         """ 
-        label = tk.Label(self, text= "Test output 4")    
+        label = tk.Label(self, text= "Dog weight")    
         label.pack(padx = 3, pady = 3) 
         
     def dog_lifespan(self):
         """Dog lifespan result
         """ 
-        label = tk.Label(self, text= "Test output 5")    
+        label = tk.Label(self, text= "Dog lifespan")    
         label.pack(padx = 3, pady = 3) 
         
     def search(self):
