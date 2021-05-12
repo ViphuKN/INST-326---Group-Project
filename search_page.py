@@ -13,7 +13,7 @@ class Application(tk.Tk):
         self.title('Search Page')
         
         #Intro Menu Screen
-        first_label = tk.Label(self, text = "INSERT TEXT HERE", font=10)  #Try to have search for size, temperament, and breed
+        first_label = tk.Label(self, text = "Search Info For Dogs", font=10)  #Try to have search for size, temperament, and breed
         #Pads for the Intro login screen
         first_label.pack(padx = 3, pady = 3) 
 
@@ -24,13 +24,13 @@ class Application(tk.Tk):
         weight_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         
         #Breed type for the dogs
-        third_label = tk.Label(self, text = "Weight", font=10)  #Try to have search for size, temperament, and breed
+        third_label = tk.Label(self, text = "Breed Type", font=10)  #Try to have search for size, temperament, and breed
         third_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
         breed_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         
         #Life span of the dogs
-        fourth_label = tk.Label(self, text = "Weight", font=10)  #Try to have search for size, temperament, and breed
+        fourth_label = tk.Label(self, text = "Lifespan", font=10)  #Try to have search for size, temperament, and breed
         fourth_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
         lifespan_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
