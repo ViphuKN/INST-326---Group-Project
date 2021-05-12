@@ -4,9 +4,9 @@ import json
 import os
 from pathlib import Path
 
-dogs_apik = '100ae381-76de-48ed-8a6d-73c6e11af170'
-# print(response.json()["name"])
+#store data in response
 response = requests.get("https://api.thedogapi.com/v1/breeds")
+#format data to json
 dogs_data = response.json()
 #lists for all dog breeds
 dogs_list = []
@@ -14,17 +14,18 @@ dogs_list = []
 breeds = set()
 #stores all possible temperaments
 behaviors = set()
-# heights = set()
+# list of classes
+dogs = []
 
 #puts all dogs names in a global list
 def store_dog_names(data):
     for dog in data:
         dogs_list.append(dog['name'])
-#run after filer_temperament
-def store_behaviors(behaviors_list):
-    behaviors = list(behaviors_list)
-    behaviors = sorted(behaviors)
-    return behaviors
+#run after filer_temperament if needed but prolly won't need TBH just in case
+# def store_behaviors(behaviors_list):
+    # behaviors = list(behaviors_list)
+    # behaviors = sorted(behaviors)
+    # return behaviors
 ### data filtering changes START ###
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed types data
@@ -47,7 +48,7 @@ def filter_breeds(data):
             # print(dog["name"] + " DID NOT HAVE A BREED!")
             dog["breed_group"] = "Miscellaneous"
             breeds.add(dog["breed_group"])
-#For figuring out what dogs have temperments missing
+#wrangles data, stores in set
 def filter_temperament(data):
     """Puts all possible behaviors in a global set & makes dog temperment a list rather than a string. 
     If no temperment, then we place unkown into list as a place holder
@@ -170,7 +171,6 @@ def get_photos(data):
     args:
         data - dog api jason data
     """
-    photos = {}
     cwd = os.getcwd()
     p = Path('dog_images')
     p.mkdir(exist_ok=True)
@@ -186,12 +186,12 @@ def get_photos(data):
             #for jpg
             if url.endswith(jpeg_suffix):
                 file_name = dog['name'] + ".jpg"
-                photos[name] = file_name
+                dog[name] = file_name
                 r = requests.get(url)
             #for png
             elif url.endswith(png_suffix):
                 file_name = dog['name'] + ".png"
-                photos[name] = file_name
+                dog[name] = file_name
                 r = requests.get(url)
             #if image file exists start loop again   
             if os.path.exists(file_name):
@@ -204,32 +204,52 @@ def get_photos(data):
             print("no URL!")
     #change directory back to parent directory
     os.chdir(cwd)
-
 ### data filtering changes END ###
+#create classes
+def create_classes(data):
+    for dog in data:
+        name = dog['name']
+        breed_group = dog['breed_group']
+        weight = dog['weight']['imperial']
+        height = dog['height']['imperial']
+        temperament = dog['temperament']
+        filename = dog[name]
+        dogs.append(Dog(name, breed_group, weight, height, temperament, filename))
 
+    pass
 #dog class
 class Dog():
-    def __init__(self, name, weight, height, temperament, filename):
+    """Used for every dog in JSON data
+    """
+    def __init__(self, name, breed_group, weight, height, temperament, filename):
+        """creates an instnace of dog for ease of info retrival using specific data from JSON data
+        args:
+            name = string, represents dog name
+            weight = list(len=2), represents weight as range
+            height = list(len=2), represents height as range
+            temperament = list of strings, ea. string is a temperament
+            filename = string, a filename indicating the dogs corresponding photo
+        """
         self.name = name
+        self.breed_group = breed_group
         self.weight = weight
         self.height = height
         self.temperament = temperament
         self.filename = filename
 
-    pass
-
 def main(data):
     #modifies the dogs api json information
-    filter_breeds(dogs_data)
-    filter_temperament(dogs_data)
-    filter_heights(dogs_data)
-    filter_weights(dogs_data)
-    filter_life_span(dogs_data)
-    store_dog_names(dogs_data)
-    # get_photos(dogs_data)
+    filter_breeds(data)
+    filter_temperament(data)
+    filter_heights(data)
+    filter_weights(data)
+    filter_life_span(data)
+    store_dog_names(data)
+    get_photos(data)
+    create_classes(data)
 
 main(dogs_data)
-#runs no matter what, stores all possible behaviors
+#run if need behaviors set() converted into a SORTED LIST
 # behaviors = store_behaviors(behaviors)
 
 
