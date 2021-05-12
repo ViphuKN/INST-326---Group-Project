@@ -175,18 +175,10 @@ def main(data):
     filter_weights(dogs_data)
     filter_life_span(dogs_data)
     get_photos(dogs_data)
+
 main(dogs_data)
 
-# print(breeds)
 
-# print(dogs_data[-1]['name'])
-# print(dogs_data[-1]['image']['url'])
-# # for k, v in dogs_data[-1].items():
-# #     print(f"{k}: {v}")
-# url = dogs_data[-1]['image']['url']
-# url_response = urllib.request.urlopen(url)
-# image1 = url_res
-# image1.show()
 
 
 
