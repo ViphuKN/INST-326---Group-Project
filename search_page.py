@@ -21,19 +21,19 @@ class Application(tk.Tk):
         second_label = tk.Label(self, text = "Weight", font=10)  #Try to have search for size, temperament, and breed
         second_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
-        weight_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
+        # weight_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         
         #Breed type for the dogs
         third_label = tk.Label(self, text = "Breed Type", font=10)  #Try to have search for size, temperament, and breed
         third_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
-        breed_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
+        # breed_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         
         #Life span of the dogs
         fourth_label = tk.Label(self, text = "Lifespan", font=10)  #Try to have search for size, temperament, and breed
         fourth_label.pack(padx = 3, pady = 3) 
         #Drop down Selections
-        lifespan_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
+        # lifespan_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         
         #A button to go to the search page
         first_button = tk.Button(self, text ="Show Results", command = self.results) 
