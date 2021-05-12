@@ -1,24 +1,17 @@
 # INST-326---Group-Project
 
-One to four sentences explaining what your project is and what it does. ```Delete this line later```
-
 This program aids people in finding dogs that are right for them. The user answers several questions that will determine what breeds best suit them. Then the program will find local shelters with those breeds and inform the user about them.
 
-An explanation on how to run the program from the command line. ```Delete this line later```
+To run it, go to your system's command prompt and enter ```python [file path]/login_page.py```
 
-words
+Once you're in the app, login or register, then search for the breed that's right for you by the weight / type / lifespan categories. After doing that, select the button to show your results, then reveal them. If at any point you're finished, simply hit the logout button.
 
-Documentation on how to use the program / how to interpret the output of the program. ```Delete this line later```
+# Bibliography:
 
-words
+```Petfinder API:``` https://www.petfinder.com/developers/
 
-An annotated bibliography of all sources you used to develop the program and how you used them. ```Delete this line later```
+Used alongside information on where the user is. Tells the user what dogs are in local shelters.
 
-words
+```The Dog API:``` https://www.thedogapi.com/
 
-
-
-
-```Alternate page attempt, since we currently can't freely move between them. Will delete when issue is resolved```
-
-https://github.com/Ghastjio/INST-326---Group-Project---Page-Test
+Used to return pictures of dog breeds and information about them.
