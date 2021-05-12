@@ -50,3 +50,11 @@
 #         # print(x["life_span"])
 #         # dog_list.append(x)
 #         """
+
+# with open('yorki.jpg', 'wb') as f:
+#     f.write(r.content)
+
+# os.mkdir('image_files')
+# with open('/image_files/yorki.jpg', 'wb') as f:
+#     f.write(r.content)
+# get the current script path.
