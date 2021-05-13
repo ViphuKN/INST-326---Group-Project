@@ -4,7 +4,6 @@ import requests
 # import json
 import os
 from pathlib import Path
-from PIL import Image
 
 #store data in response
 response = requests.get("https://api.thedogapi.com/v1/breeds")
@@ -23,6 +22,11 @@ dogs = []
 def store_dog_names(data):
     for dog in data:
         dogs_list.append(dog['name'])
+#run after filer_temperament if needed but prolly won't need TBH just in case
+# def store_behaviors(behaviors_list):
+    # behaviors = list(behaviors_list)
+    # behaviors = sorted(behaviors)
+    # return behaviors
 ### data filtering changes START ###
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed types data
@@ -234,11 +238,7 @@ class Dog():
         self.temperament = temperament
         self.filename = filename
 
-def execute_filters(data):
-    """Executes previouse functions as part of JSON data cleaning process.
-    Args:
-        data, json database retrieved form The Dogs Api
-    """
+def main(data):
     #modifies the dogs api json information
     filter_breeds(data)
     filter_temperament(data)
@@ -249,71 +249,11 @@ def execute_filters(data):
     get_photos(data)
     create_classes(data)
 
-def parse_args(args_list):
-    """Takes a list of strings from the command prompt and passes them through as
-    arguments
-    
-    Args:
-    args_list (list) : the list of strings from the command prompt
-    Returns:
-    args (ArgumentParser)
-    """
-    parser = ArgumentParser()
-    
-    parser.add_argument('breed_type', type = str, help = 'Type of dog breed you are interested in')
-    # parser.add_argument('temperament', type = str, help = 'Dog behavior you are interested in')
-    parser.add_argument('flood_photos', type = str, default = "no flood", help = 'Gives user chance to be flooded with photos.')
-    
-    # parse and validate arguments
-    args = parser.parse_args(args_list)
-    flood_options = ["yes flood", "no flood"]
-    if args.breed_type not in breeds:
-        wrong_breed = "WRONG CHOICE. Try: 'Herding', 'Miscellaneous', 'Toy', 'Terrier', 'Working', 'Non-Sporting', 'Sporting', 'Mixed', 'Hound'"
-        raise ValueError(wrong_breed)
-    if args.flood_photos not in flood_options:
-        wrong_option = "WRONG CHOICE. Try: 'yes flood' or 'no flood'"
-        raise ValueError(wrong_option)
-    
-    return args
 
-def main(breed_type, flood):
-    cwd = os.getcwd()
-    print(f"{breed_type} dog breeds:")
-    for dog in dogs:
-        if dog.breed_group == breed_type:
-            print(f"{dog.name.upper()}")
-            print(f"Temperament: ", end="")
-            I = dog.temperament
-            print(', '.join(map(str,I)))
-            if dog.weight[0] == 0:
-                print(f"Weight in Imperial: UNKNOWN.")
-            else:
-                print(f"Weight in Imperial: {dog.weight[0]}-{dog.weight[1]}lb")
-            if dog.height[0] == 0:
-                print(f"Height in Imperial: UNKNOWN.\n")
-            else:
-                print(f"Height in Imperial: {dog.height[0]}-{dog.height[1]}in.\n")
-    if flood == "yes flood":
-        os.chdir('dog_images')
-        for dog in dogs:
-            if dog.breed_group == breed_type:
-                filename = dog.filename
-                img = Image.open(filename)
-                img.show()
-    if flood == "no flood":
-        pass
-    os.chdir(cwd)
+# main(dogs_data)
 
-if __name__ == "__main__":
-    execute_filters(dogs_data)
-    try:
-        arguments = parse_args(sys.argv[1:])
-    except ValueError as e:
-        sys.exit(str(e))
-    x = arguments.breed_type
-    y = arguments.flood_photos    
-    main(x, y)
-    
+#run if need behaviors set() converted into a SORTED LIST
+# behaviors = store_behaviors(behaviors)
 
 
 
