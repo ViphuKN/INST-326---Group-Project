@@ -2,6 +2,11 @@ import tkinter as tk
 import requests
 import json
 
+from requests.api import options
+import TheDogsApi as d #gr
+
+d.main(d.dogs_data) #gr
+
 """Search for the dog breed"""
 
 class Application(tk.Tk):
@@ -26,6 +31,16 @@ class Application(tk.Tk):
         #Breed type for the dogs
         third_label = tk.Label(self, text = "Breed Type", font=10)  #Try to have search for size, temperament, and breed
         third_label.pack(padx = 3, pady = 3) 
+
+        root = tk.Tk() #gr
+        def show():
+            tk.Label.config(text = clicked.get())
+        options = d.breeds
+        clicked = tk.StringVar()
+        clicked.set('first')
+        drop = tk.OptionMenu(root, clicked, *options)
+        drop.pack() #gr
+
         #Drop down Selections
         # breed_selections = OptionMenu(win, clicked, "Small", "Medium", "Large")
         

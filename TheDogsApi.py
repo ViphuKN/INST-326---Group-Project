@@ -1,6 +1,5 @@
-import time
 import requests
-import json
+# import json
 import os
 from pathlib import Path
 
@@ -8,7 +7,7 @@ from pathlib import Path
 response = requests.get("https://api.thedogapi.com/v1/breeds")
 #format data to json
 dogs_data = response.json()
-#lists for all dog breeds
+#lists for all dog breeds, just name
 dogs_list = []
 #stores 9 breed types
 breeds = set()
@@ -248,7 +247,9 @@ def main(data):
     get_photos(data)
     create_classes(data)
 
-main(dogs_data)
+
+# main(dogs_data)
+
 #run if need behaviors set() converted into a SORTED LIST
 # behaviors = store_behaviors(behaviors)
 
