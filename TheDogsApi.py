@@ -319,8 +319,7 @@ def main(breed_type, flood):
         os.chdir('dog_images')
         for dog in dogs:
             if dog.breed_group == breed_type:
-                filename = dog.filename
-                img = Image.open(filename)
+                img = Image.open(dog.filename, mode='r')
                 img.show()
     #Will do nothing if no flood.
     if flood == "no flood":
