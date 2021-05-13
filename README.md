@@ -4,18 +4,18 @@ This program aids people in finding dogs that are right for them. The user input
 
 EXECUTABLE FILE: TheDogsApi.py
 TO RUN IT: you should run the file from your terminal and enter: ```Python TheDogsApi.py __arg1__ __arg2(optional)__```
-1) is a positional argument, there are 9 dog types that you are able to choose to learn more about from:
+arg 1) is a positional argument, there are 9 dog types that you are able to choose to learn more about from:
 *'Herding', 'Miscellaneous', 'Toy', 'Terrier', 'Working', 'Non-Sporting', 'Sporting', 'Mixed', 'Hound'*
 Choose one of the above.
 
-2) is an optional argument. There are two choices for this argument: 'yes flood' & 'no flood'
+arg 2) is an optional argument. There are two choices for this argument: 'yes flood' & 'no flood'
 If left empty, it will default to 'no flood'.
 if '--flood_photos "yes flood"' typed after arg 1 then you fill be flooded with photos from all the dog breeds listed under that breed type.
 
 Once you've exectued your command line argument(s) and wait a few seconds, it will then reveal all the dog breeds in that breed category and display infomration in the following order: NAME/ Temerament/ Life Span/ Weight/ and Height.
 If you opted to ' --flood_photos "yes flood" ' then all the photos corresponding to that breed type will open. While the filenames are correct, I'm not sure why the image doesn't open with correct filename.
 
-*EXAMPLE COMMAND LINE OPTIONS:*
+*EXAMPLE COMMAND LINE EXAMPLES:*
 - Python TheDogsApi.py "Toy" --flood_photos "yes flood"
 - Python TheDogsApi.py "Toy" --flood_photos "no flood"
 
