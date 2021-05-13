@@ -3,7 +3,7 @@
 This program aids people in finding dogs that are right for them. The user inputs into the command line the type of dog breed that they are interested in learning more about. The program returns a neatly formatted list of dogs and their corresponding attributes that can be used by the user in order to help them make a decision about what specific dog breed they're interested in.
 
 EXECUTABLE FILE: TheDogsApi.py
-TO RUN IT: you should run the file from your terminal and enter: ```Python TheDogsApi.py __arg1__ __arg2(optional)__```
+TO RUN IT: you should run the file from your terminal and enter: ```Python TheDogsApi.py __arg1__ __--arg2(optional)__```
 arg 1) is a positional argument, there are 9 dog types that you are able to choose to learn more about from:
 *'Herding', 'Miscellaneous', 'Toy', 'Terrier', 'Working', 'Non-Sporting', 'Sporting', 'Mixed', 'Hound'*
 Choose one of the above.
