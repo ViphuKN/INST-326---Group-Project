@@ -266,19 +266,30 @@ def parse_args(args_list):
     
     # parse and validate arguments
     args = parser.parse_args(args_list)
-    flood_options = ["yes flood", "no flood"]
     if args.breed_type not in breeds:
-        wrong_breed = "WRONG CHOICE. Try: 'Herding', 'Miscellaneous', 'Toy', 'Terrier', 'Working', 'Non-Sporting', 'Sporting', 'Mixed', 'Hound'"
+        wrong_breed = "WRONG BREED TYPE CHOICE. Try: 'Herding', 'Miscellaneous', 'Toy', 'Terrier', 'Working', 'Non-Sporting', 'Sporting', 'Mixed', 'Hound'"
         raise ValueError(wrong_breed)
+    flood_options = ["yes flood", "no flood"]
     if args.flood_photos not in flood_options:
-        wrong_option = "WRONG CHOICE. Try: 'yes flood' or 'no flood'"
+        wrong_option = "WRONG FLOOD CHOICE. Try: 'yes flood' or 'no flood'"
         raise ValueError(wrong_option)
     
     return args
 
 def main(breed_type, flood):
+    """executes command line arguments in order to figure out what breed types a user
+    is interested in receiving information about. Gives user option to be flooded with images
+    of the dog that they were interested in. Either they choose yes flood or no flood.
+
+    args:
+        breed_type, a string representing the type of dog that this function will parse through
+        flood, a string conditional, either 'yes flood' or 'no flood' - will either flood user
+        with images or not.
+    """
     cwd = os.getcwd()
+    #prints a friendly message
     print(f"{breed_type} dog breeds:")
+    #print infromation about dogs within this breed type category including name, behavior, weight, and height
     for dog in dogs:
         if dog.breed_group == breed_type:
             print(f"{dog.name.upper()}")
@@ -293,25 +304,33 @@ def main(breed_type, flood):
                 print(f"Height in Imperial: UNKNOWN.\n")
             else:
                 print(f"Height in Imperial: {dog.height[0]}-{dog.height[1]}in.\n")
+    #will flood user with images if choosen to be flooded
     if flood == "yes flood":
+        #open image sub directory
         os.chdir('dog_images')
         for dog in dogs:
             if dog.breed_group == breed_type:
                 filename = dog.filename
                 img = Image.open(filename)
                 img.show()
+    #Will do nothing if no flood.
     if flood == "no flood":
         pass
+    #returns to parent directory
     os.chdir(cwd)
 
 if __name__ == "__main__":
+    #runs  all filtering functions
     execute_filters(dogs_data)
+    #checks for command line arguments
     try:
         arguments = parse_args(sys.argv[1:])
     except ValueError as e:
         sys.exit(str(e))
+    #stores arguments to be passed into main function
     x = arguments.breed_type
-    y = arguments.flood_photos    
+    y = arguments.flood_photos
+    #runs main function  
     main(x, y)
     
 
