@@ -23,7 +23,7 @@ dogs = []
 def store_dog_names(data):
     for dog in data:
         dogs_list.append(dog['name'])
-### data filtering changes START ###
+##### data filtering changes START #####
 def filter_breeds(data):
     """Filters Through dogs_data to take care of missing breed types data
     empty strings (only one case) are labeled msc, and missing breed_group keys are
@@ -201,8 +201,8 @@ def get_photos(data):
             print("no URL!")
     #change directory back to parent directory
     os.chdir(cwd)
-### data filtering changes END ###
-#create classes
+##### data filtering changes END #####
+#create classes for each dog in API
 def create_classes(data):
     for dog in data:
         name = dog['name']
@@ -210,15 +210,16 @@ def create_classes(data):
         weight = dog['weight']['imperial']
         height = dog['height']['imperial']
         temperament = dog['temperament']
+        life_span = dog['life_span']
         filename = dog[name]
-        dogs.append(Dog(name, breed_group, weight, height, temperament, filename))
+        dogs.append(Dog(name, breed_group, weight, height, temperament, life_span, filename))
 
     pass
-#dog class
+#dog class format
 class Dog():
     """Used for every dog in JSON data
     """
-    def __init__(self, name, breed_group, weight, height, temperament, filename):
+    def __init__(self, name, breed_group, weight, height, temperament, life_span, filename):
         """creates an instnace of dog for ease of info retrival using specific data from JSON data
         args:
             name = string, represents dog name
@@ -232,10 +233,11 @@ class Dog():
         self.weight = weight
         self.height = height
         self.temperament = temperament
+        self.life_span = life_span
         self.filename = filename
-
+#executes all filters
 def execute_filters(data):
-    """Executes previouse functions as part of JSON data cleaning process.
+    """Executes filter functions as part of JSON data cleaning process.
     Args:
         data, json database retrieved form The Dogs Api
     """
@@ -262,7 +264,7 @@ def parse_args(args_list):
     
     parser.add_argument('breed_type', type = str, help = 'Type of dog breed you are interested in')
     # parser.add_argument('temperament', type = str, help = 'Dog behavior you are interested in')
-    parser.add_argument('flood_photos', type = str, default = "no flood", help = 'Gives user chance to be flooded with photos.')
+    parser.add_argument('--flood_photos', type = str, default = "no flood", help = 'Gives user chance to be flooded with photos.')
     
     # parse and validate arguments
     args = parser.parse_args(args_list)
@@ -286,6 +288,7 @@ def main(breed_type, flood):
         flood, a string conditional, either 'yes flood' or 'no flood' - will either flood user
         with images or not.
     """
+    #gets current directory
     cwd = os.getcwd()
     #prints a friendly message
     print(f"{breed_type} dog breeds:")
@@ -296,6 +299,11 @@ def main(breed_type, flood):
             print(f"Temperament: ", end="")
             I = dog.temperament
             print(', '.join(map(str,I)))
+            #if age, weight or height starts with 0 it is unknown(by prog. functionality)
+            if dog.life_span[0] == 0:
+                print(f"Age: UNKNOWN")
+            else:
+                print(f"Life span: {dog.life_span[0]}-{dog.life_span[1]} years")
             if dog.weight[0] == 0:
                 print(f"Weight in Imperial: UNKNOWN.")
             else:
@@ -304,6 +312,7 @@ def main(breed_type, flood):
                 print(f"Height in Imperial: UNKNOWN.\n")
             else:
                 print(f"Height in Imperial: {dog.height[0]}-{dog.height[1]}in.\n")
+                
     #will flood user with images if choosen to be flooded
     if flood == "yes flood":
         #open image sub directory
